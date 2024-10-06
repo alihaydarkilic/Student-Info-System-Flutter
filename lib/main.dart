@@ -8,16 +8,18 @@ void main() {
 // ignore: must_be_immutable
 class MyApp extends StatelessWidget {
   //const MyApp({super.key});
-  String mesaj = "Öğrenci takip sistemi!!!";
+  String appBarMsg = "Manager Page";
   List<Student> students = [
     Student("Arwen ", "Galadhrim", 5, "1.png"),
-    Student("Elenion", "Fëanorian", 10, "2.png"),
+    Student("Galadriel", "Fëanorian", 10, "2.png"),
     Student("Thalion", "Bronzebirch", 15, "3.png"),
     Student("Lirael", "Silverleaf", 25, "4.png"),
     Student("Faramir", "Nightshadow", 40, "5.png"),
     Student("Elarion", "Stonehand", 35, "5.png"),
     Student("Nyssa", "Windrider", 70, "1.png"),
     Student("Caelum", "Fireforge", 50, "2.png"),
+    Student("Tariel", "Duskwalker", 100, "3.png"),
+    Student("Elenion", "Fireforge", 50, "2.png"),
     Student("Tariel", "Duskwalker", 100, "3.png"),
   ];
 
@@ -26,8 +28,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text(mesaj),
-          backgroundColor: const Color.fromRGBO(0, 0, 155, 0.5)),
+          title: Text(appBarMsg),
+          backgroundColor: const Color.fromARGB(204, 216, 76, 5)),
       body: buildBody(context),
     );
   }
@@ -56,8 +58,8 @@ class MyApp extends StatelessWidget {
                     title: Text(students[index].firstName.toString() +
                         " " +
                         students[index].lastName.toString()),
-                    subtitle: Text("Not ortalalaması : " +
-                        students[index].gradePoint.toString()),
+                    subtitle:
+                        Text("GPA : " + students[index].gradePoint.toString()),
                     trailing: buildStatusIcon(students[index].gradePoint),
                     onTap: () {
                       print(students[index].firstName.toString());
