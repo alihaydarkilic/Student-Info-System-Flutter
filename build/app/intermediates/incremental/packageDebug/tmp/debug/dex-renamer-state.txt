@@ -1,4 +1,4 @@
-#Fri Oct 04 00:40:57 TRT 2024
+#Tue Oct 08 18:42:04 TRT 2024
 base.0=/Users/lizard/Desktop/flutter ile mobil uygulama/ilkornekfluttter/firstlook/flutter_application_1/build/app/intermediates/dex/debug/mergeExtDexDebug/classes.dex
 base.1=/Users/lizard/Desktop/flutter ile mobil uygulama/ilkornekfluttter/firstlook/flutter_application_1/build/app/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
 base.2=/Users/lizard/Desktop/flutter ile mobil uygulama/ilkornekfluttter/firstlook/flutter_application_1/build/app/intermediates/dex/debug/mergeProjectDexDebug/1/classes.dex

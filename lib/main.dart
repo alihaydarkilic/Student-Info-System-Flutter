@@ -6,9 +6,23 @@ void main() {
 }
 
 // ignore: must_be_immutable
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  // ignore: prefer_const_constructors_in_immutables
+  MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+  // State<MyApp> createState() {
+  //   return _MyAppState();
+  // }
+}
+
+class _MyAppState extends State<MyApp> {
   //const MyApp({super.key});
   String appBarMsg = "Manager Page";
+
+  String choseStudent = "";
+
   List<Student> students = [
     Student("Arwen ", "Galadhrim", 5, "1.png"),
     Student("Galadriel", "Fëanorian", 10, "2.png"),
@@ -23,7 +37,6 @@ class MyApp extends StatelessWidget {
     Student("Tariel", "Duskwalker", 100, "3.png"),
   ];
 
-  MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,22 +71,114 @@ class MyApp extends StatelessWidget {
                     title: Text(students[index].firstName.toString() +
                         " " +
                         students[index].lastName.toString()),
-                    subtitle:
-                        Text("GPA : " + students[index].gradePoint.toString()),
+                    subtitle: Text("GPA : " +
+                        students[index].gradePoint.toString() +
+                        "[${students[index].getStatus.toString()}]"),
                     trailing: buildStatusIcon(students[index].gradePoint),
                     onTap: () {
-                      print(students[index].firstName.toString());
+                      setState(() {
+                        choseStudent = students[index].firstName.toString() +
+                            " " +
+                            students[index].lastName.toString();
+                      });
+                      print(choseStudent);
                     },
                   );
                 })),
-        Center(
-          child: ElevatedButton(
-            onPressed: () {
-              var msg = "Alert";
-              showAlert(context, msg);
-            },
-            child: Text("Show result!!"),
-          ),
+        Text("Seçili OGR:" + choseStudent),
+        Row(
+          //Add,update,delete buttons widget
+          children: [
+            Flexible(
+              fit: FlexFit.tight,
+              flex: 1,
+              child: ElevatedButton(
+                onPressed: () {
+                  var msg = "Alert";
+                  showAlert(context, msg);
+                },
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.add_box_outlined,
+                      color: Colors.black,
+                    ),
+                    SizedBox(
+                      width: 5.0,
+                    ),
+                    Text(
+                      "Add new",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ],
+                ),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.greenAccent,
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0.0))),
+              ),
+            ),
+            Flexible(
+              fit: FlexFit.tight,
+              flex: 1,
+              child: ElevatedButton(
+                onPressed: () {
+                  var msg = "Alert";
+                  showAlert(context, msg);
+                },
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.update_rounded,
+                      color: Colors.black,
+                    ),
+                    SizedBox(
+                      width: 5.0,
+                    ),
+                    Text(
+                      "Update",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ],
+                ),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blueAccent,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0.0))),
+              ),
+            ),
+            Flexible(
+              fit: FlexFit.tight,
+              flex: 1,
+              child: ElevatedButton(
+                onPressed: () {
+                  var msg = "Alert";
+                  showAlert(context, msg);
+                },
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.delete_rounded,
+                      color: Colors.black,
+                    ),
+                    SizedBox(
+                      width: 5.0,
+                    ),
+                    Text(
+                      "Delete",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ],
+                ),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.redAccent,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0.0))),
+              ),
+            )
+          ],
         ),
       ],
     );
@@ -89,27 +194,6 @@ class MyApp extends StatelessWidget {
         return Icon(Icons.album);
       } else {}
       return Icon(Icons.clear);
-    }
-  }
-
-  Widget buildStatusAvatar(int? gradePoint) {
-    if (gradePoint == null) {
-      return CircleAvatar(
-        backgroundColor: Colors.blueAccent,
-      );
-    } else {
-      if (gradePoint >= 50) {
-        return CircleAvatar(
-          backgroundColor: Colors.green,
-        );
-      } else if (gradePoint >= 40) {
-        return CircleAvatar(
-          backgroundColor: Colors.yellow,
-        );
-      } else {}
-      return CircleAvatar(
-        backgroundColor: Colors.red,
-      );
     }
   }
 }
