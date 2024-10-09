@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/controller/studentController.dart';
 import 'package:flutter_application_1/models/student.dart';
+import 'package:flutter_application_1/screens/student_add.dart';
 
 void main() {
   runApp(MaterialApp(home: MyApp()));
@@ -19,22 +21,24 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   //const MyApp({super.key});
-  String appBarMsg = "Manager Page";
+  String appBarMsg = "Students Management Page";
+  Student selectedStudent = Student.withId(0, "", "", 0, "");
+  Student lastOperationStu = Student.withId(0, "", "", 0, "");
+  var studentController = StudentController();
 
-  String choseStudent = "";
-
+  //data source
   List<Student> students = [
-    Student("Arwen ", "Galadhrim", 5, "1.png"),
-    Student("Galadriel", "Fëanorian", 10, "2.png"),
-    Student("Thalion", "Bronzebirch", 15, "3.png"),
-    Student("Lirael", "Silverleaf", 25, "4.png"),
-    Student("Faramir", "Nightshadow", 40, "5.png"),
-    Student("Elarion", "Stonehand", 35, "5.png"),
-    Student("Nyssa", "Windrider", 70, "1.png"),
-    Student("Caelum", "Fireforge", 50, "2.png"),
-    Student("Tariel", "Duskwalker", 100, "3.png"),
-    Student("Elenion", "Fireforge", 50, "2.png"),
-    Student("Tariel", "Duskwalker", 100, "3.png"),
+    Student.withId(1, "Arwen ", "Galadhrim", 5, "1.png"),
+    Student.withId(2, "Galadriel", "Fëanorian", 10, "2.png"),
+    Student.withId(3, "Thalion", "Bronzebirch", 15, "3.png"),
+    Student.withId(4, "Lirael", "Silverleaf", 25, "4.png"),
+    Student.withId(5, "Faramir", "Nightshadow", 40, "5.png"),
+    Student.withId(6, "Elarion", "Stonehand", 35, "5.png"),
+    Student.withId(7, "Nyssa", "Windrider", 70, "1.png"),
+    Student.withId(8, "Caelum", "Fireforge", 50, "2.png"),
+    Student.withId(9, "Tariel", "Duskwalker", 100, "3.png"),
+    Student.withId(10, "Elenion", "Fireforge", 50, "2.png"),
+    Student.withId(11, "Tariel", "Duskwalker", 100, "3.png"),
   ];
 
   @override
@@ -47,9 +51,9 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  void showAlert(BuildContext context, String msg) {
+  void showAlert(BuildContext context, String title, String msg) {
     var alert = AlertDialog(
-      title: Text("Results is showed"),
+      title: Text(title),
       content: Text(msg),
     );
     showDialog(context: context, builder: (BuildContext context) => alert);
@@ -77,15 +81,24 @@ class _MyAppState extends State<MyApp> {
                     trailing: buildStatusIcon(students[index].gradePoint),
                     onTap: () {
                       setState(() {
-                        choseStudent = students[index].firstName.toString() +
-                            " " +
-                            students[index].lastName.toString();
+                        selectedStudent = students[index];
                       });
-                      print(choseStudent);
+                      // print(selectedStudent);
                     },
                   );
                 })),
-        Text("Seçili OGR:" + choseStudent),
+        Column(
+          children: [
+            Text("Last Operation - STU : ${lastOperationStu.operation} - " +
+                lastOperationStu.firstName.toString() +
+                " " +
+                lastOperationStu.lastName.toString()),
+            Text("Selected STU : " +
+                selectedStudent.firstName.toString() +
+                " " +
+                selectedStudent.lastName.toString()),
+          ],
+        ),
         Row(
           //Add,update,delete buttons widget
           children: [
@@ -94,8 +107,17 @@ class _MyAppState extends State<MyApp> {
               flex: 1,
               child: ElevatedButton(
                 onPressed: () {
-                  var msg = "Alert";
-                  showAlert(context, msg);
+                  //showAlert(context, "Added", "Added student: ");
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => StudentAddScreen(students,
+                                  onStudentAdded: (newStudent) {
+                                setState(() {
+                                  //update the list when a new student is added.
+                                  lastOperationStu = newStudent;
+                                });
+                              })));
                 },
                 child: Row(
                   children: [
@@ -125,8 +147,8 @@ class _MyAppState extends State<MyApp> {
               flex: 1,
               child: ElevatedButton(
                 onPressed: () {
-                  var msg = "Alert";
-                  showAlert(context, msg);
+                  var msg = "Updated student:";
+                  showAlert(context, "Updated", msg);
                 },
                 child: Row(
                   children: [
@@ -154,8 +176,17 @@ class _MyAppState extends State<MyApp> {
               flex: 1,
               child: ElevatedButton(
                 onPressed: () {
-                  var msg = "Alert";
-                  showAlert(context, msg);
+                  setState(() {
+                    students.remove(selectedStudent);
+                    lastOperationStu = selectedStudent;
+                  });
+
+                  showAlert(context, "Deleted",
+                      "Deleted Student: ${selectedStudent.firstName.toString() + " " + selectedStudent.lastName.toString()}");
+                  lastOperationStu = selectedStudent;
+                  studentController.stuDelete(selectedStudent);
+                  selectedStudent = Student.withId(0, "", "", 0, "");
+                  print(lastOperationStu.operation.toString());
                 },
                 child: Row(
                   children: [
