@@ -3,7 +3,7 @@ class Student {
   String? firstName;
   String? lastName;
   int? gradePoint;
-  String? _status;
+  //String? _status;
   String? photoURL = "blankprofile.png";
   String? operation = "";
 //if you want delete or update a student the list use this

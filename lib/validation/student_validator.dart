@@ -18,7 +18,7 @@ mixin class stuValidationMixin {
       return "Please, enter a value.";
     } else if (int.tryParse(value) == null) {
       return "Please enter a valid number.";
-    } else if (int?.tryParse(value)! < 0 || int.tryParse(value)! > 100) {
+    } else if (int.tryParse(value)! < 0 || int.tryParse(value)! > 100) {
       return "The grade point must be at between 0-100.";
     }
 

@@ -45,5 +45,13 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>Uygulamamızın fotoğraf kütüphanesine erişmesi gerekiyor.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Uygulamamızın kameraya erişmesi gerekiyor.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Uygulamamızın mikrofonu kullanabilmesi için erişim gerekiyor.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+    <string>Uygulamamızın mikrofonu kullanabilmesi için erişim gerekiyor.</string>
 </dict>
 </plist>

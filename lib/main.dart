@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/controller/studentController.dart';
 import 'package:flutter_application_1/models/student.dart';
 import 'package:flutter_application_1/screens/student_add.dart';
+import 'package:flutter_application_1/screens/student_edit.dart';
 
 void main() {
   runApp(MaterialApp(home: MyApp()));
@@ -40,7 +43,7 @@ class _MyAppState extends State<MyApp> {
     Student.withId(10, "Elenion", "Fireforge", 50, "2.png"),
     Student.withId(11, "Tariel", "Duskwalker", 100, "3.png"),
   ];
-
+  File file = new File(" ");
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,7 +118,7 @@ class _MyAppState extends State<MyApp> {
                                   onStudentAdded: (newStudent) {
                                 setState(() {
                                   //update the list when a new student is added.
-                                  lastOperationStu = newStudent;
+                                  //lastOperationStu = newStudent;
                                 });
                               })));
                 },
@@ -147,8 +150,25 @@ class _MyAppState extends State<MyApp> {
               flex: 1,
               child: ElevatedButton(
                 onPressed: () {
-                  var msg = "Updated student:";
-                  showAlert(context, "Updated", msg);
+                  if (selectedStudent.id != 0) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                StudentEditScreen(selectedStudent,
+                                    onStudentEdited: (newStudent) {
+                                  setState(() {
+                                    //update the list when a edited student is edited.
+
+                                    lastOperationStu = newStudent;
+                                    selectedStudent =
+                                        Student.withId(0, "", "", 0, "");
+                                  });
+                                })));
+                  } else {
+                    showAlert(context, "Eror",
+                        "Selected student is empty. Please select a student.");
+                  }
                 },
                 child: Row(
                   children: [
@@ -225,6 +245,15 @@ class _MyAppState extends State<MyApp> {
         return Icon(Icons.album);
       } else {}
       return Icon(Icons.clear);
+    }
+  }
+
+  Future<void> checkFileExists(String path) async {
+    final file = File(path);
+    if (await file.exists()) {
+      print("Dosya var: $path");
+    } else {
+      print("Dosya bulunamadı: $path");
     }
   }
 }

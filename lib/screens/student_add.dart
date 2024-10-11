@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/main.dart';
 import 'package:flutter_application_1/models/student.dart';
 import 'package:flutter_application_1/validation/student_validator.dart';
 
@@ -58,7 +57,7 @@ class _StudentAddState extends State<StudentAddScreen> with stuValidationMixin {
         body: Center(
           child: Container(
             padding: EdgeInsets.all(20),
-            height: 400,
+            height: 450,
             margin: EdgeInsets.only(left: 35.0, right: 35.0),
             decoration: BoxDecoration(
                 color: const Color.fromARGB(218, 255, 255, 255),
@@ -96,7 +95,7 @@ class _StudentAddState extends State<StudentAddScreen> with stuValidationMixin {
       decoration: InputDecoration(
         labelText: "Name",
         hintText: "Gimli",
-        border: OutlineInputBorder(), // Sınır için OutlineInputBorder kullan
+        border: OutlineInputBorder(),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.blue, width: 2.0),
         ),
