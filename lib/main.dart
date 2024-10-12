@@ -13,6 +13,7 @@ void main() {
 // ignore: must_be_immutable
 class MyApp extends StatefulWidget {
   // ignore: prefer_const_constructors_in_immutables
+
   MyApp({super.key});
 
   @override
@@ -36,14 +37,14 @@ class _MyAppState extends State<MyApp> {
     Student.withId(3, "Thalion", "Bronzebirch", 15, "3.png"),
     Student.withId(4, "Lirael", "Silverleaf", 25, "4.png"),
     Student.withId(5, "Faramir", "Nightshadow", 40, "5.png"),
-    Student.withId(6, "Elarion", "Stonehand", 35, "5.png"),
+    Student.withId(6, "Elarion", "Stonehand", 35, "2.png"),
     Student.withId(7, "Nyssa", "Windrider", 70, "1.png"),
     Student.withId(8, "Caelum", "Fireforge", 50, "2.png"),
     Student.withId(9, "Tariel", "Duskwalker", 100, "3.png"),
     Student.withId(10, "Elenion", "Fireforge", 50, "2.png"),
     Student.withId(11, "Tariel", "Duskwalker", 100, "3.png"),
   ];
-  File file = new File(" ");
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,9 +72,23 @@ class _MyAppState extends State<MyApp> {
                 itemBuilder: (BuildContext context, int index) {
                   //listviewin.builder listenin eleman sayısı kadar bu bloğu çalıştırır.
                   return ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: AssetImage(
-                          'images/${students[index].photoURL.toString()}'),
+                    leading: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(100)),
+                      child: students[index].photoFile != null
+                          ? Image.file(
+                              students[index].photoFile!,
+                              width: 50,
+                              height: 50,
+                              fit: BoxFit.fill,
+                            )
+                          : Image.asset(
+                              "images/${students[index].photoURL.toString()}",
+                              width: 50,
+                              height: 50,
+                              fit: BoxFit.fill,
+                            ),
                     ),
                     title: Text(students[index].firstName.toString() +
                         " " +
@@ -96,10 +111,30 @@ class _MyAppState extends State<MyApp> {
                 lastOperationStu.firstName.toString() +
                 " " +
                 lastOperationStu.lastName.toString()),
-            Text("Selected STU : " +
-                selectedStudent.firstName.toString() +
-                " " +
-                selectedStudent.lastName.toString()),
+            Container(
+              margin: EdgeInsets.only(left: 80),
+              child: Row(
+                children: [
+                  Container(
+                    child: GestureDetector(
+                      child: Icon(Icons.clear),
+                      onTap: () {
+                        setState(() {
+                          selectedStudent = Student.withId(0, "", "", 0, "");
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text("Selected STU : " +
+                      selectedStudent.firstName.toString() +
+                      " " +
+                      selectedStudent.lastName.toString()),
+                ],
+              ),
+            ),
           ],
         ),
         Row(
@@ -118,7 +153,7 @@ class _MyAppState extends State<MyApp> {
                                   onStudentAdded: (newStudent) {
                                 setState(() {
                                   //update the list when a new student is added.
-                                  //lastOperationStu = newStudent;
+                                  lastOperationStu = newStudent;
                                 });
                               })));
                 },
@@ -154,17 +189,23 @@ class _MyAppState extends State<MyApp> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                StudentEditScreen(selectedStudent,
-                                    onStudentEdited: (newStudent) {
-                                  setState(() {
-                                    //update the list when a edited student is edited.
+                            builder: (context) => StudentEditScreen(
+                                  selectedStudent,
+                                  onStudentEdited: (newStudent) {
+                                    setState(() {
+                                      //update the list when a edited student is edited.
 
-                                    lastOperationStu = newStudent;
-                                    selectedStudent =
-                                        Student.withId(0, "", "", 0, "");
-                                  });
-                                })));
+                                      lastOperationStu = newStudent;
+                                    });
+                                  },
+                                  onPhotoEdited: (newFile) {
+                                    setState(() {
+                                      selectedStudent.photoFile = newFile;
+                                      selectedStudent =
+                                          Student.withId(0, "", "", 0, "");
+                                    });
+                                  },
+                                )));
                   } else {
                     showAlert(context, "Eror",
                         "Selected student is empty. Please select a student.");

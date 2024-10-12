@@ -8,8 +8,10 @@ import 'package:image_picker/image_picker.dart';
 
 class StudentEditScreen extends StatefulWidget {
   final Function(Student) onStudentEdited;
+  final Function(File) onPhotoEdited;
   Student? selectedStudent;
-  StudentEditScreen(Student? selectedStudent, {required this.onStudentEdited}) {
+  StudentEditScreen(Student? selectedStudent,
+      {required this.onStudentEdited, required this.onPhotoEdited}) {
     this.selectedStudent = selectedStudent;
   }
 
@@ -170,6 +172,7 @@ class _StudentEditScreen extends State<StudentEditScreen>
               ? null
               : selectedStudent?.photoURL = selectedImg.toString();
           widget.onStudentEdited(selectedStudent!);
+          widget.onPhotoEdited(selectedImg!);
           showAlert(context, "Edited",
               "Edited: ${selectedStudent!.firstName.toString() + " " + selectedStudent!.lastName.toString()}");
           //Navigator.pop(context);

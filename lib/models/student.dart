@@ -1,3 +1,5 @@
+import 'dart:io';
+
 class Student {
   int? id;
   String? firstName;
@@ -6,6 +8,7 @@ class Student {
   //String? _status;
   String? photoURL = "blankprofile.png";
   String? operation = "";
+  File? photoFile;
 //if you want delete or update a student the list use this
   Student.withId(int id, String firstName, String lastName, int gradePoint,
       String photoURL) {
