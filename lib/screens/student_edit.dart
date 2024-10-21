@@ -189,19 +189,7 @@ class _StudentEditScreen extends State<StudentEditScreen>
         Container(
           decoration: BoxDecoration(
               color: Colors.black, borderRadius: BorderRadius.circular(100)),
-          child: selectedImg != null
-              ? Image.file(
-                  selectedImg!,
-                  width: 200,
-                  height: 200,
-                  fit: BoxFit.fill,
-                )
-              : Image.asset(
-                  "images/${selectedStudent?.photoURL.toString()}",
-                  width: 200,
-                  height: 200,
-                  fit: BoxFit.fill,
-                ),
+          child: buildProfilePicture(context),
         ),
         ElevatedButton(
             onPressed: () {
@@ -238,8 +226,31 @@ class _StudentEditScreen extends State<StudentEditScreen>
 
       setState(() {
         selectedImg = savedImage;
-        print("Dosya yolu" + selectedImg!.path);
       });
     }
+  }
+
+  Widget buildProfilePicture(BuildContext context) {
+    return Container(
+      child: Builder(
+        builder: (BuildContext context) {
+          if (selectedImg != null) {
+            return Image.file(selectedImg!,
+                width: 150, height: 150, fit: BoxFit.fill);
+          } else if (selectedImg == null &&
+              selectedStudent!.photoFile == null) {
+            return Image.asset(
+              "images/${selectedStudent!.photoURL.toString()}",
+              width: 150,
+              height: 150,
+              fit: BoxFit.fill,
+            );
+          } else {
+            return Image.file(selectedStudent!.photoFile!,
+                width: 150, height: 150, fit: BoxFit.fill);
+          }
+        },
+      ),
+    );
   }
 }
