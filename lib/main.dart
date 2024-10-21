@@ -73,6 +73,7 @@ class _MyAppState extends State<MyApp> {
                   //listviewin.builder listenin eleman sayısı kadar bu bloğu çalıştırır.
                   return ListTile(
                     leading: Container(
+                      clipBehavior: Clip.hardEdge,
                       decoration: BoxDecoration(
                           color: Colors.black,
                           borderRadius: BorderRadius.circular(100)),

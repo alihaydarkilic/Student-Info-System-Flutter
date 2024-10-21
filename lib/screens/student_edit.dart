@@ -172,7 +172,6 @@ class _StudentEditScreen extends State<StudentEditScreen>
               ? null
               : selectedStudent?.photoURL = selectedImg.toString();
           widget.onStudentEdited(selectedStudent!);
-          widget.onPhotoEdited(selectedImg!);
           showAlert(context, "Edited",
               "Edited: ${selectedStudent!.firstName.toString() + " " + selectedStudent!.lastName.toString()}");
           //Navigator.pop(context);
@@ -187,6 +186,7 @@ class _StudentEditScreen extends State<StudentEditScreen>
     return Column(
       children: [
         Container(
+          clipBehavior: Clip.hardEdge,
           decoration: BoxDecoration(
               color: Colors.black, borderRadius: BorderRadius.circular(100)),
           child: buildProfilePicture(context),
