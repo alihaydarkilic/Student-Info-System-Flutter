@@ -43,7 +43,7 @@ class Student {
       if (this.gradePoint! >= 50) {
         message = "Pass";
       } else if (this.gradePoint! >= 40) {
-        message = "The makeup exam";
+        message = "The make-up exam";
       } else {
         message = "Failed";
       }
