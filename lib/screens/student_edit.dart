@@ -168,9 +168,7 @@ class _StudentEditScreen extends State<StudentEditScreen>
         if (formKey.currentState?.validate() ?? false) {
           formKey.currentState!.save();
           selectedStudent?.operation = "Edited";
-          selectedImg == null
-              ? null
-              : selectedStudent?.photoURL = selectedImg.toString();
+          selectedImg == null ? null : selectedStudent?.photoFile = selectedImg;
           widget.onStudentEdited(selectedStudent!);
           showAlert(context, "Edited",
               "Edited: ${selectedStudent!.firstName.toString() + " " + selectedStudent!.lastName.toString()}");
